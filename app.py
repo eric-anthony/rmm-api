@@ -18,6 +18,7 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
+#Home Page
 @app.route('/')
 @login_required
 def home():
@@ -27,6 +28,7 @@ def home():
 def welcome():
     return render_template("welcome.html")
     
+#Login Page
 @app.route('/login',methods=['GET','POST'])
 def login():
     error = None
@@ -40,12 +42,22 @@ def login():
     
     return render_template("login.html", error=error)
 
+#Logout Page
 @app.route('/logout')
 @login_required
 def logout():
     session.pop('logged_in', None)
     flash('You were just logged out')
     return redirect(url_for('welcome'))
+    
+#Signin Page
+@app.route('/signin')
+def signin():
+    return render_template("signin.html")
+    
+@app.route('/jumbotron')
+def jumbotron():
+    return render_template("jumbotron.html")
 
 if __name__ == '__main__':
     host = os.getenv('IP','0.0.0.0')
